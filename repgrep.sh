@@ -5,31 +5,29 @@ grep_command="grep --color=always ";
 
 # import all of the command arguements 
 args_joined="$*";
-
-final_grep_command="${grep_command} ${args_joined}"
-
+new_args_joind=();
 # the delta (in seconds) we will run the grep commands
 rep_time=10;
 
-# code for fetching the rep time
+#fetching the rep_time and create new list of the relevan args
 next=0;
-for var in "$@"
+for ((i=1; i<=$#; i++))
 do
-    if [ "$next" == "1" ]; then
-      rep_time=$var;
-    fi
-    if [ "$var" == "-rep" ];
-    then
-         next=1;
-    else
-         next=0;
-    fi
+   if [ "$next" == "1" ]; then
+	rep_time=${!i};
+	next=0;
+   elif [ "${!i}" == "-rep" ]; then
+	next=1;
+   else
+	new_args_joind+=(${!i});
+   fi
 done
-# end of code fetching the rep time
+
+final_grep_command="${grep_command} ${new_args_joind[*]// /|}"
 
 # run the grep commands
 rep_counter=0;
-echo "............. repgrep: ${final_grep_command} ............."
+echo "............. repgrep: ${final_grep_command} , every ${rep_time} [sec] ............."
 echo
 while true
 do
