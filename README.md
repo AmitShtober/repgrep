@@ -1,5 +1,5 @@
 ## repgrep - repeated grep
-`repgrep` automates your `grep` command and will run your command every X seconds.
+`repgrep` automates your `grep` command and will run your command every X seconds (Similiar to watch command).
 
 Just change your `grep` command to `repgrep` and add the -rep X flag.
 
